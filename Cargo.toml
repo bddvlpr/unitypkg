@@ -1,0 +1,14 @@
+[package]
+name = "unitypkg"
+version = "0.1.0"
+authors = ["Luna Simons <luna@bddvlpr.com>"]
+edition = "2021"
+description = "Manipulate Unity's portable package files"
+license = "MIT"
+keywords = ["gamedev", "unity", "unitypkg"]
+
+[dependencies]
+flate2 = "1.0.30"
+regex = "1.10.5"
+tar = "0.4.41"
+uuid = { version = "1.9.1", features = ["v4"] }
