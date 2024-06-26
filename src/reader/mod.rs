@@ -12,7 +12,7 @@ pub fn read_from_file(file: File) -> Package {
 
     let entries = archive
         .entries()
-        .expect("Archive should not be empty and contain valid entries");
+        .expect("Package should not be empty and contain valid entries");
 
     let regex = Regex::new(r"\.\/([0-9a-f]{32})\/(.*)").unwrap();
 
@@ -97,7 +97,7 @@ mod tests {
     fn asset_simple_cube() {
         let package = read_from_file(get_package_file("simple-cube"));
 
-        assert_eq!(package.assets.len(), 1);
+        assert_eq!(package.assets.len(), 2);
         assert!(package
             .assets
             .contains_key(&uuid!("c24c6def6556015fb913fec2280e3315")));
