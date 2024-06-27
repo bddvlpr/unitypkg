@@ -1,0 +1,10 @@
+[package]
+name = "unitypkg-cli"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+description.workspace = true
+license.workspace = true
+keywords.workspace = true
+
+[dependencies]

@@ -177,7 +177,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "unitypkg"
+name = "unitypkg-cli"
+version = "0.1.0"
+
+[[package]]
+name = "unitypkg-core"
 version = "0.1.0"
 dependencies = [
  "flate2",
