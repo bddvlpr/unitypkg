@@ -1,11 +1,13 @@
-use crate::core::{Package, PackageAssetBuilder};
+use std::{collections::HashMap, io::Read};
+
 use flate2::read::GzDecoder;
 use regex::Regex;
-use std::{collections::HashMap, io::Read};
 use tar::Archive;
 use uuid::Uuid;
 
-pub fn read<R: Read>(r: R) -> Package {
+use crate::{Package, PackageAssetBuilder};
+
+pub fn read_package<R: Read>(r: R) -> Package {
     let mut package = Package::new();
     let decoder = GzDecoder::new(r);
     let mut archive = Archive::new(decoder);
@@ -73,9 +75,11 @@ pub fn read<R: Read>(r: R) -> Package {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use std::{fs::File, path::PathBuf};
+
     use uuid::uuid;
+
+    use super::*;
 
     fn get_package_file(path: &str) -> File {
         let mut root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -85,7 +89,7 @@ mod tests {
 
     #[test]
     fn asset_simple_material() {
-        let package = read_from(get_package_file("simple-material"));
+        let package = read_package(get_package_file("simple-material"));
 
         assert_eq!(package.assets.len(), 1);
         assert!(package
@@ -95,7 +99,7 @@ mod tests {
 
     #[test]
     fn asset_simple_cube() {
-        let package = read_from(get_package_file("simple-cube"));
+        let package = read_package(get_package_file("simple-cube"));
 
         assert_eq!(package.assets.len(), 2);
         assert!(package
