@@ -1,5 +1,8 @@
 {
   rustPlatform,
+  installShellFiles,
+  stdenv,
+  buildPackages,
   lib,
 }: let
   inherit ((builtins.fromTOML (builtins.readFile ./unitypkg-cli/Cargo.toml)).package) version;
@@ -10,7 +13,19 @@ in
 
     src = ./.;
 
-    cargoHash = "sha256-EnfAFP/4cmtUuzmmXn9A6AYG3Yud2zBBYm0ORe282uc=";
+    nativeBuildInputs = [installShellFiles];
+
+    postInstall = let
+      unitypkg-cli = "${stdenv.hostPlatform.emulator buildPackages} $out/bin/unitypkg-cli";
+    in
+      lib.optionalString (stdenv.hostPlatform.emulatorAvailable buildPackages) ''
+        installShellCompletion --cmd unitypkg-cli \
+          --bash <(${unitypkg-cli} completions bash) \
+          --fish <(${unitypkg-cli} completions fish) \
+          --zsh <(${unitypkg-cli} completions zsh)
+      '';
+
+    cargoHash = "sha256-7zFZjI+lYJ3PRklqw1GmnuG+XxAoGr7h9/+cqPnLoj0=";
 
     meta = with lib; {
       description = "Manipulate Unity's portable package files";

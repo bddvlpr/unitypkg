@@ -1,30 +1,39 @@
+mod cli;
+
 use std::{
     fs::{create_dir_all, File},
-    path::PathBuf,
+    io::stdout,
 };
 
-use clap::Parser;
+use clap::{CommandFactory, Parser};
+use clap_complete::generate;
+use cli::{Cli, Commands};
 use unitypkg_core::{reader::read_package, unpack::unpack_package};
-
-#[derive(Parser)]
-#[command(version, about, long_about = None)]
-struct Cli {
-    #[arg(short, long, required = true)]
-    input: Vec<PathBuf>,
-
-    output: PathBuf,
-}
 
 fn main() {
     let cli = Cli::parse();
 
-    for input in cli.input {
-        let package = read_package(File::open(input).unwrap());
-
-        if !cli.output.exists() {
-            create_dir_all(&cli.output).unwrap();
+    match &cli.command {
+        Some(Commands::Completions { shell }) => {
+            let cmd = Cli::command();
+            generate(
+                *shell,
+                &mut cmd.clone(),
+                cmd.get_name().to_string(),
+                &mut stdout(),
+            );
         }
+        Some(Commands::Unpack { input, output }) => {
+            for input in input {
+                let package = read_package(File::open(input).unwrap());
 
-        unpack_package(package, &cli.output);
+                if !output.exists() {
+                    create_dir_all(&output).unwrap();
+                }
+
+                unpack_package(package, &output);
+            }
+        }
+        None => {}
     }
 }
