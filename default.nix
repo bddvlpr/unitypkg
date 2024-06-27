@@ -10,7 +10,7 @@ in
 
     src = ./.;
 
-    cargoHash = "sha256-w5BshLg1OiqiJJ+JRm9JQkjMtWAex/eMtHmlOfQ7Kt4=";
+    cargoHash = "sha256-EnfAFP/4cmtUuzmmXn9A6AYG3Yud2zBBYm0ORe282uc=";
 
     meta = with lib; {
       description = "Manipulate Unity's portable package files";

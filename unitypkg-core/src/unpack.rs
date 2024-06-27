@@ -6,7 +6,7 @@ use std::{
 
 use crate::Package;
 
-pub fn unpack_package(package: Package, directory: PathBuf) {
+pub fn unpack_package(package: Package, directory: &PathBuf) {
     create_dir_all(&directory).expect("Failed to create root directory");
 
     for asset in package.assets.values() {
@@ -61,7 +61,7 @@ mod test {
         builder.meta = Some(vec![5, 6, 7, 8]);
         package.assets.insert(uuid, builder.build());
 
-        unpack_package(package, temp_dir.clone());
+        unpack_package(package, &temp_dir);
 
         let asset_file = temp_dir.join("Assets/SomeMaterial");
         let meta_file = asset_file.with_extension("meta");
