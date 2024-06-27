@@ -41,9 +41,8 @@ mod test {
 
     use uuid::Uuid;
 
-    use crate::PackageAssetBuilder;
-
     use super::*;
+    use crate::PackageAssetBuilder;
 
     #[test]
     fn unpack() {

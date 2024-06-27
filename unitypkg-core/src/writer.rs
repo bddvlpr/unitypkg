@@ -63,9 +63,8 @@ mod tests {
     use tar::Archive;
     use uuid::Uuid;
 
-    use crate::PackageAssetBuilder;
-
     use super::*;
+    use crate::PackageAssetBuilder;
 
     #[test]
     fn write() {
