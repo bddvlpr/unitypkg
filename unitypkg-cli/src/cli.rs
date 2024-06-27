@@ -12,14 +12,19 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
+    /// Generate completions for your shell.
     Completions {
+        /// The target shell to generate completions for.
         #[arg(value_enum, required = true)]
         shell: Shell,
     },
+    /// Unpack (multiple) unitypackages into a directory.
     Unpack {
+        /// The input file(s) to be processed.
         #[arg(short, long, required = true)]
         input: Vec<PathBuf>,
 
+        /// The output directory to write all processed inputs to.
         output: PathBuf,
     },
 }
