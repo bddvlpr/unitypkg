@@ -1,13 +1,11 @@
 [workspace]
 resolver = "2"
-members = [
-  "unitypkg-core",
-  "unitypkg-cli"
-]
+members = ["unitypkg-core", "unitypkg-cli"]
 
 [workspace.package]
 authors = ["Luna Simons <luna@bddvlpr.com>"]
 edition = "2021"
 description = "Manipulate Unity's portable package files"
+repository = "https://github.com/bddvlpr/unitypkg"
 license = "MIT"
 keywords = ["gamedev", "unity", "unitypkg"]
