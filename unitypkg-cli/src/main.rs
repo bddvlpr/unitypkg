@@ -25,13 +25,14 @@ fn main() {
         }
         Some(Commands::Unpack { input, output }) => {
             for input in input {
-                let package = read_package(File::open(input).unwrap());
+                let package = read_package(File::open(input).unwrap())
+                    .expect("Invalid unitypackage. Please check the file and try again.");
 
                 if !output.exists() {
                     create_dir_all(&output).unwrap();
                 }
 
-                unpack_package(package, &output);
+                unpack_package(package, &output).expect("Failed to unpack unitypackage.");
             }
         }
         None => {}

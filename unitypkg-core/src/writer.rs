@@ -1,11 +1,15 @@
-use std::io::Write;
+use std::io::{self, Write};
 
 use flate2::{write::GzEncoder, Compression};
 use tar::{Builder, Header};
 
 use crate::Package;
 
-pub fn write_package<W: Write>(package: Package, w: W, compression: Compression) {
+pub fn write_package<W: Write>(
+    package: Package,
+    w: W,
+    compression: Compression,
+) -> Result<(), io::Error> {
     let encoder = GzEncoder::new(w, compression);
     let mut builder = Builder::new(encoder);
 
@@ -15,41 +19,43 @@ pub fn write_package<W: Write>(package: Package, w: W, compression: Compression)
         {
             let path = format!("./{}/pathname", guid_str);
             let mut header = Header::new_gnu();
-            header.set_path(&path).unwrap();
+            header.set_path(&path)?;
             header.set_size(asset.pathname.len() as u64);
             header.set_cksum();
-            builder.append(&header, asset.pathname.as_bytes()).unwrap();
+            builder.append(&header, asset.pathname.as_bytes())?;
         }
 
         if let Some(preview) = asset.preview {
             let path = format!("./{}/preview.png", guid_str);
             let mut header = Header::new_gnu();
-            header.set_path(&path).unwrap();
+            header.set_path(&path)?;
             header.set_size(preview.len() as u64);
             header.set_cksum();
-            builder.append(&header, preview.as_slice()).unwrap();
+            builder.append(&header, preview.as_slice())?;
         }
 
         if let Some(meta) = asset.meta {
             let path = format!("./{}/asset.meta", guid_str);
             let mut header = Header::new_gnu();
-            header.set_path(&path).unwrap();
+            header.set_path(&path)?;
             header.set_size(meta.len() as u64);
             header.set_cksum();
-            builder.append(&header, meta.as_slice()).unwrap();
+            builder.append(&header, meta.as_slice())?;
         }
 
         if let Some(data) = asset.data {
             let path = format!("./{}/asset", guid_str);
             let mut header = Header::new_gnu();
-            header.set_path(&path).unwrap();
+            header.set_path(&path)?;
             header.set_size(data.len() as u64);
             header.set_cksum();
-            builder.append(&header, data.as_slice()).unwrap();
+            builder.append(&header, data.as_slice())?;
         }
     }
 
-    builder.finish().unwrap();
+    builder.finish()?;
+
+    Ok(())
 }
 
 #[cfg(test)]
@@ -80,7 +86,7 @@ mod tests {
         package.assets.insert(uuid, builder.build());
 
         let mut buffer = Cursor::new(Vec::new());
-        write_package(package, &mut buffer, Compression::default());
+        write_package(package, &mut buffer, Compression::default()).unwrap();
 
         let output = buffer.into_inner();
         assert!(!output.is_empty());

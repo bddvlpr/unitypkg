@@ -1,34 +1,34 @@
 use std::{
     fs::{create_dir_all, File},
-    io::Write,
+    io::{self, Write},
     path::PathBuf,
 };
 
 use crate::Package;
 
-pub fn unpack_package(package: Package, directory: &PathBuf) {
-    create_dir_all(&directory).expect("Failed to create root directory");
+pub fn unpack_package(package: Package, directory: &PathBuf) -> Result<(), io::Error> {
+    create_dir_all(&directory)?;
 
     for asset in package.assets.values() {
         let asset_file = directory.join(&asset.pathname);
         let meta_file = asset_file.with_extension("meta");
 
         if let Some(parent) = asset_file.parent() {
-            create_dir_all(parent).expect("Failed to create parent directory for asset file");
+            create_dir_all(parent)?;
         }
 
         if let Some(data) = &asset.data {
             let mut file = File::create(&asset_file).unwrap();
-            file.write_all(data)
-                .expect("Failed to write asset data to file");
+            file.write_all(data)?;
         }
 
         if let Some(meta) = &asset.meta {
             let mut file = File::create(&meta_file).unwrap();
-            file.write_all(meta)
-                .expect("Failed to write asset meta to file");
+            file.write_all(meta)?;
         }
     }
+
+    Ok(())
 }
 
 #[cfg(test)]
@@ -60,7 +60,7 @@ mod test {
         builder.meta = Some(vec![5, 6, 7, 8]);
         package.assets.insert(uuid, builder.build());
 
-        unpack_package(package, &temp_dir);
+        unpack_package(package, &temp_dir).unwrap();
 
         let asset_file = temp_dir.join("Assets/SomeMaterial");
         let meta_file = asset_file.with_extension("meta");
