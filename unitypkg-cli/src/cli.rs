@@ -4,7 +4,7 @@ use clap::{command, Parser, Subcommand};
 use clap_complete::Shell;
 
 #[derive(Parser)]
-#[command(version, about, long_about = None, arg_required_else_help(true))]
+#[command(version, author, about, arg_required_else_help(true))]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Option<Commands>,
