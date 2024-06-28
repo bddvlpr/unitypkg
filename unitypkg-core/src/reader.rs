@@ -48,30 +48,22 @@ pub fn read_package<R: Read>(r: R) -> Result<Package, PackageReadError> {
             match asset_path {
                 "pathname" => {
                     let mut pathname = String::new();
-                    entry
-                        .read_to_string(&mut pathname)
-                        .expect("Cannot read pathname of asset");
+                    entry.read_to_string(&mut pathname)?;
                     builder.pathname = Some(pathname);
                 }
                 "preview.png" => {
                     let mut preview = Vec::new();
-                    entry
-                        .read_to_end(&mut preview)
-                        .expect("Cannot read preview of asset");
+                    entry.read_to_end(&mut preview)?;
                     builder.preview = Some(preview);
                 }
                 "asset.meta" => {
                     let mut meta = Vec::new();
-                    entry
-                        .read_to_end(&mut meta)
-                        .expect("Cannot read meta of asset");
+                    entry.read_to_end(&mut meta)?;
                     builder.meta = Some(meta);
                 }
                 "asset" => {
                     let mut data = Vec::new();
-                    entry
-                        .read_to_end(&mut data)
-                        .expect("Cannot read data of asset");
+                    entry.read_to_end(&mut data)?;
                     builder.data = Some(data);
                 }
                 _ => {}
