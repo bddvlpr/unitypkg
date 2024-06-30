@@ -29,10 +29,10 @@ fn main() {
                     .expect("Invalid unitypackage. Please check the file and try again.");
 
                 if !output.exists() {
-                    create_dir_all(&output).unwrap();
+                    create_dir_all(output).unwrap();
                 }
 
-                unpack_package(package, &output).expect("Failed to unpack unitypackage.");
+                unpack_package(package, output).expect("Failed to unpack unitypackage.");
             }
         }
         None => {}

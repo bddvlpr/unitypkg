@@ -41,9 +41,7 @@ pub fn read_package<R: Read>(r: R) -> Result<Package, PackageReadError> {
             let asset_guid = Uuid::parse_str(&captures[1])?;
             let asset_path = &captures[2];
 
-            let builder = found_assets
-                .entry(asset_guid)
-                .or_insert_with(PackageAssetBuilder::default);
+            let builder = found_assets.entry(asset_guid).or_default();
 
             match asset_path {
                 "pathname" => {

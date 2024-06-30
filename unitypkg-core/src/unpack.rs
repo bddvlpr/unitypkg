@@ -7,7 +7,7 @@ use std::{
 use crate::Package;
 
 pub fn unpack_package(package: Package, directory: &PathBuf) -> Result<(), io::Error> {
-    create_dir_all(&directory)?;
+    create_dir_all(directory)?;
 
     for asset in package.assets.values() {
         let asset_file = directory.join(&asset.pathname);

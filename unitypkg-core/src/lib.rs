@@ -19,6 +19,12 @@ impl Package {
     }
 }
 
+impl Default for Package {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct PackageAsset {
     pub pathname: String,
