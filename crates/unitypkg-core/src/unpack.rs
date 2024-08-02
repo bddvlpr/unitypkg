@@ -33,12 +33,9 @@ pub fn unpack_package(package: Package, directory: &PathBuf) -> Result<(), io::E
 
 #[cfg(test)]
 mod test {
-    use std::{
-        env::temp_dir,
-        fs::{create_dir, remove_dir_all},
-        io::Read,
-    };
+    use std::{fs::remove_dir_all, io::Read};
 
+    use tempfile::tempdir;
     use uuid::Uuid;
 
     use super::*;
@@ -46,11 +43,7 @@ mod test {
 
     #[test]
     fn unpack() {
-        let temp_dir = temp_dir().join("test_unpack");
-        if temp_dir.exists() {
-            remove_dir_all(&temp_dir).unwrap();
-        }
-        create_dir(&temp_dir).unwrap();
+        let temp_dir = tempdir().unwrap().into_path();
 
         let mut package = Package::new();
         let uuid = Uuid::new_v4();

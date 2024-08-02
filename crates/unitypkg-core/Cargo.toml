@@ -9,8 +9,11 @@ license.workspace = true
 keywords.workspace = true
 
 [dependencies]
-flate2 = "1.0.30"
-regex = "1.10.5"
-tar = "0.4.41"
-thiserror = "1.0.61"
-uuid = { version = "1.9.1", features = ["v4"] }
+flate2 = "1.0"
+regex = "1.10"
+tar = "0.4"
+thiserror = "1.0"
+uuid = { version = "1.9", features = ["v4"] }
+
+[dev-dependencies]
+tempfile = { workspace = true }

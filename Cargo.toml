@@ -9,3 +9,6 @@ description = "Manipulate Unity's portable package files"
 repository = "https://github.com/bddvlpr/unitypkg"
 license = "MIT"
 keywords = ["gamedev", "unity", "unitypkg"]
+
+[workspace.dependencies]
+tempfile = "3.10"
