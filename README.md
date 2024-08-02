@@ -8,5 +8,5 @@ Manipulate Unity's portable package files.
 
 This project is split up into two parts, please read their respective READMEs for information.
 
-- [unitypkg-core](./unitypkg-core): to read, modify and write unitypackages.
-- [unitypkg-cli](./unitypkg-cli): a CLI to unpack unitypackages to a directory.
+- [unitypkg-core](./crates/unitypkg-core): to read, modify and write unitypackages.
+- [unitypkg-cli](./crates/unitypkg-cli): a CLI to unpack unitypackages to a directory.

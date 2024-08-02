@@ -5,7 +5,7 @@
   buildPackages,
   lib,
 }: let
-  inherit ((builtins.fromTOML (builtins.readFile ./unitypkg-cli/Cargo.toml)).package) version;
+  inherit ((builtins.fromTOML (builtins.readFile ./crates/unitypkg-cli/Cargo.toml)).package) version;
 in
   rustPlatform.buildRustPackage {
     pname = "unitypkg-cli";
