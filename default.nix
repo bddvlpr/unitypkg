@@ -25,7 +25,7 @@ in
           --zsh <(${unitypkg-cli} completions zsh)
       '';
 
-    cargoHash = "sha256-fLWLnh7+wQobsgWuhG6D9Nteam7TG50IyU6OmVRmG4A=";
+    cargoHash = "sha256-xQwbo8qi582OsYZKMLwL+QQgT3ySbnejqAiboRTh4HU=";
 
     meta = with lib; {
       description = "Manipulate Unity's portable package files";
