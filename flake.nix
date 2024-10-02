@@ -4,9 +4,14 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    crane.url = "github:ipetkov/crane";
   };
 
-  outputs = {flake-parts, ...} @ inputs:
+  outputs = {
+    flake-parts,
+    crane,
+    ...
+  } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
         "aarch64-darwin"
@@ -15,9 +20,11 @@
         "x86_64-linux"
       ];
 
-      perSystem = {pkgs, ...}: {
+      perSystem = {pkgs, ...}: let
+        craneLib = crane.mkLib pkgs;
+      in {
         packages = rec {
-          unitypkg = pkgs.callPackage ./. {};
+          unitypkg = pkgs.callPackage ./. {inherit craneLib;};
           default = unitypkg;
         };
 
