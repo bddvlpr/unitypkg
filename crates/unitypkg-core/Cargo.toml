@@ -13,7 +13,7 @@ flate2 = "1.1"
 regex = "1.11"
 tar = "0.4"
 thiserror = "2.0"
-uuid = { version = "1.14", features = ["v4"] }
+uuid = { version = "1.15", features = ["v4"] }
 
 [dev-dependencies]
 tempfile = { workspace = true }
