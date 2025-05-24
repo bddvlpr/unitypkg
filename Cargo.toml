@@ -11,4 +11,4 @@ license = "MIT"
 keywords = ["gamedev", "unity", "unitypkg"]
 
 [workspace.dependencies]
-tempfile = "3.19"
+tempfile = "3.20"
